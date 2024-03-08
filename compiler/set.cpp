@@ -27,6 +27,8 @@ namespace set {
             dest_instruction = 1 << 5;
         } else if (dest == "d") {
             dest_instruction = 1 << 4;
+        } else if (dest == "prt") {
+            dest_instruction = 1 << 11;
         } else {
             printf("At line %d: set command to reg %s not supported.\n", current_line, dest.c_str());
             exit(1);
