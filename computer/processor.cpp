@@ -11,7 +11,7 @@ void Memory::set(bool a, bool b, bool d, bool ra, bool prt, bool cl, unsigned sh
     ram.set(A.output(), ra, cl, X);
     rA = ram.output();
 
-    printf("%x %x %x %x\n", A.output(), B.output(), D.output(), rA);
+    // printf("%x %x %x %x\n", A.output(), B.output(), D.output(), rA);
 
     if (cl && prt) {
         cout << (unsigned char)X;
@@ -39,7 +39,7 @@ void Instruction::set(unsigned short I, unsigned short A, unsigned short B, unsi
 }
 
 void ControlUnit::set(unsigned short I, unsigned short A, unsigned short B, unsigned short D, unsigned short rA) {
-    printf("0x%x: ", I);
+    // printf("0x%x: ", I);
     switch (I & 1 << 15) {
         case 0:
             R = I;

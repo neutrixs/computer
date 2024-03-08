@@ -1,9 +1,44 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <fstream>
 #include "processor.h"
 #include "program.h"
 using namespace std;
+
+string read(string path) {
+    ifstream infile(path, ios::binary);
+
+    if (infile.is_open()) {
+        infile.seekg(0, ios::end);
+        streampos size = infile.tellg();
+        infile.seekg(0, ios::beg);
+
+        vector<char> buffer(size);
+        infile.read(buffer.data(), size);
+        infile.close();
+
+        string fileContents(buffer.data(), size);
+        return fileContents;
+    } else {
+        cerr << "Unable to open file for reading" << endl;
+        exit(1);
+        return "";
+    }
+}
+
+vector<unsigned short> strtovec16(string input) {
+    vector<unsigned short> output;
+    for (int i = 0; i < input.size(); i++) {
+        if (!(i % 2)) {
+            output.push_back((input[i] & 255) << 8);
+        } else {
+            output.back() |= (input[i] & 255);
+        }
+    }
+
+    return output;
+}
 
 vector<unsigned short> parse(string input, string sep) {
     vector<unsigned short> data;
@@ -26,7 +61,9 @@ vector<unsigned short> parse(string input, string sep) {
 }
 
 int main() {
-    vector<unsigned short> ROM = parse(program, "\n");
+    string executable = read("executable");
+    vector<unsigned short> ROM = strtovec16(executable);
+
     Computer comp(ROM);
 
     for (int i = 0; i < ROM.size() * 2; i++) {

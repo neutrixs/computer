@@ -2,6 +2,7 @@
 
 RAM::RAM(unsigned int size) {
     memory = std::vector<unsigned char>(size);
+    outval = 0;
 }
 void RAM::set(unsigned short ad, bool st, bool cl, unsigned char d) {
     if (cl) {

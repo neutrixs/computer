@@ -5,10 +5,6 @@
 #include "set.h"
 using namespace std;
 
-const string EXAMPLE =
-" \n\n          set A 0x2f"
-;
-
 //0x0 0x1: reserved address for 'backup'
 vector<char> compile(string input) {
     vector<char> output;
@@ -40,9 +36,38 @@ vector<char> compile(string input) {
     return output;
 }
 
-int main(int argc, char* argv[]) {
-    vector<char> output = compile(EXAMPLE);
+string read(string path) {
+    ifstream infile(path, ios::binary);
 
+    if (infile.is_open()) {
+        infile.seekg(0, ios::end);
+        streampos size = infile.tellg();
+        infile.seekg(0, ios::beg);
+
+        vector<char> buffer(size);
+        infile.read(buffer.data(), size);
+        infile.close();
+
+        string fileContents(buffer.data(), size);
+        return fileContents;
+    } else {
+        cerr << "Unable to open file for reading" << endl;
+        exit(1);
+        return "";
+    }
+}
+
+int main(int argc, char* argv[]) {
+    string input = read("program.txt");
+    vector<char> output = compile(input);
+
+    ofstream outfile("executable", ios::binary);
+    if (outfile.is_open()) {
+        outfile.write(output.data(), output.size());
+        outfile.close();
+    } else {
+        cerr << "Unable to open file for writing" << endl;
+    }
 
     return 0;
 }
