@@ -16,7 +16,7 @@ namespace set {
         string copy = input.substr(pos + 1);
 
         poss = copy.find(' ');
-        postab = input.find('\t');
+        postab = copy.find('\t');
         pos = min(poss, postab);
 
         string dest = copy.substr(0, pos);

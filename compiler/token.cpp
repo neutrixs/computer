@@ -120,6 +120,11 @@ short parse_value(string input, int current_line) {
                         exit(1);
                     }
 
+                    if (char_finish) {
+                        printf("At line %d: char can only hold one byte\n", current_line);
+                        exit(1);
+                    }
+
                     if (ignore_next) {
                         char_finish = true;
                         output = parse_escape(c);
