@@ -2,3 +2,4 @@ build
 executable
 program.txt
 .vscode
+.vs
