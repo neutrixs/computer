@@ -13,7 +13,7 @@
             "variables": [
                 {
                     "name": "BOOST_ROOT",
-                    "value": "C:\\Program Files\\boost_1_84_0",
+                    "value": "C:/Program Files/boost_1_84_0",
                     "type": "STRING"
                 }
             ]
@@ -31,7 +31,7 @@
             "variables": [
                 {
                     "name": "BOOST_ROOT",
-                    "value": "C:\\Program Files\\boost_1_84_0",
+                    "value": "C:/Program Files/boost_1_84_0",
                     "type": "STRING"
                 }
             ]
