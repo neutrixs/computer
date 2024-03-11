@@ -4,7 +4,6 @@ set(
 	"alu.cpp"
 	"memory.cpp"
 	"processor.cpp"
-	"program.cpp"
 )
 
 if(DEFINED BOOST_ROOT)

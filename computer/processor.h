@@ -7,9 +7,9 @@ using namespace std;
 
 /** do not actually use the b register. only used for some operations :) data might be lost if you try to do so.
  * put it in ram instead or a and d
- * 
+ *
  * 0x0 - 0x3: reserved ram addresses:
- * 
+ *
  * Instructions bit:
  * conditions:
  * 0: gt, 1: eq, 2: lt
@@ -25,56 +25,56 @@ using namespace std;
 */
 
 class Memory {
-    public:
-        Memory();
-        Register16 A;
-        Register16 B;
-        Register16 D;
-        unsigned short rA;
-        void set(bool a, bool b, bool d, bool ra, bool prt, bool cl, unsigned short X);
-    private:
-        RAM ram;
+public:
+	Memory();
+	Register16 A;
+	Register16 B;
+	Register16 D;
+	unsigned short rA;
+	void set(bool a, bool b, bool d, bool ra, bool prt, bool cl, unsigned short X);
+private:
+	RAM ram;
 };
 
 class Instruction {
-    public:
-        unsigned short R;
-        bool a;
-        bool b;
-        bool d;
-        bool ra;
-        bool j;
-        bool prt;
-        void set(unsigned short I, unsigned short A, unsigned short B, unsigned short D, unsigned short rA);
-    private:
-        Condition cond;
-        ALU alu;
+public:
+	unsigned short R;
+	bool a;
+	bool b;
+	bool d;
+	bool ra;
+	bool j;
+	bool prt;
+	void set(unsigned short I, unsigned short A, unsigned short B, unsigned short D, unsigned short rA);
+private:
+	Condition cond;
+	ALU alu;
 };
 
 class ControlUnit {
-    public:
-        unsigned short R;
-        bool a;
-        bool b;
-        bool d;
-        bool ra;
-        bool j;
-        bool prt;
-        void set(unsigned short I, unsigned short A, unsigned short B, unsigned short D, unsigned short rA);
-    private:
-        Instruction instruction;
+public:
+	unsigned short R;
+	bool a;
+	bool b;
+	bool d;
+	bool ra;
+	bool j;
+	bool prt;
+	void set(unsigned short I, unsigned short A, unsigned short B, unsigned short D, unsigned short rA);
+private:
+	Instruction instruction;
 };
 
 class Computer {
-    public:
-        Computer(std::vector<unsigned short> R);
-        std::vector<unsigned short> ROM;
-        void pulse();
-    // private:
-        ControlUnit ctrl;
-        Memory mem;
-        bool cl = 0;
-        unsigned short ROM_addr;
+public:
+	Computer(std::vector<unsigned short> R);
+	std::vector<unsigned short> ROM;
+	void pulse();
+	// private:
+	ControlUnit ctrl;
+	Memory mem;
+	bool cl = 0;
+	unsigned short ROM_addr;
 };
 
 #endif
