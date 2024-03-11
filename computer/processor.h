@@ -26,55 +26,55 @@ using namespace std;
 
 class Memory {
 public:
-	Memory();
-	Register16 A;
-	Register16 B;
-	Register16 D;
-	unsigned short rA;
-	void set(bool a, bool b, bool d, bool ra, bool prt, bool cl, unsigned short X);
+    Memory();
+    Register16 A;
+    Register16 B;
+    Register16 D;
+    unsigned short rA;
+    void set(bool a, bool b, bool d, bool ra, bool prt, bool cl, unsigned short X);
 private:
-	RAM ram;
+    RAM ram;
 };
 
 class Instruction {
 public:
-	unsigned short R;
-	bool a;
-	bool b;
-	bool d;
-	bool ra;
-	bool j;
-	bool prt;
-	void set(unsigned short I, unsigned short A, unsigned short B, unsigned short D, unsigned short rA);
+    unsigned short R;
+    bool a;
+    bool b;
+    bool d;
+    bool ra;
+    bool j;
+    bool prt;
+    void set(unsigned short I, unsigned short A, unsigned short B, unsigned short D, unsigned short rA);
 private:
-	Condition cond;
-	ALU alu;
+    Condition cond;
+    ALU alu;
 };
 
 class ControlUnit {
 public:
-	unsigned short R;
-	bool a;
-	bool b;
-	bool d;
-	bool ra;
-	bool j;
-	bool prt;
-	void set(unsigned short I, unsigned short A, unsigned short B, unsigned short D, unsigned short rA);
+    unsigned short R;
+    bool a;
+    bool b;
+    bool d;
+    bool ra;
+    bool j;
+    bool prt;
+    void set(unsigned short I, unsigned short A, unsigned short B, unsigned short D, unsigned short rA);
 private:
-	Instruction instruction;
+    Instruction instruction;
 };
 
 class Computer {
 public:
-	Computer(std::vector<unsigned short> R);
-	std::vector<unsigned short> ROM;
-	void pulse();
-	// private:
-	ControlUnit ctrl;
-	Memory mem;
-	bool cl = 0;
-	unsigned short ROM_addr;
+    Computer(std::vector<unsigned short> R);
+    std::vector<unsigned short> ROM;
+    void pulse();
+    // private:
+    ControlUnit ctrl;
+    Memory mem;
+    bool cl = 0;
+    unsigned short ROM_addr;
 };
 
 #endif
