@@ -99,7 +99,7 @@ std::vector<short> set::gen_instructions(short dest_instruction, short data, sho
     std::vector<short> instructions;
     bool is_dest_a = dest_instruction == 1 << 5;
     bool is_dest_ra = dest_instruction == 1 << 3;
-    #define i(a) instructions.push_back(a)
+    #define i(a) instructions.push_back((short)a)
 
     if (!is_dest_a) {
         // backup A to 0x0 and 0x1

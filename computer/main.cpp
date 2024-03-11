@@ -42,13 +42,13 @@ vector<unsigned short> strtovec16(string input) {
 
 vector<unsigned short> parse(string input, string sep) {
     vector<unsigned short> data;
-    int index = 0;
+    size_t index = 0;
     while (1) {
-        int length_until_end = input.length() - index;
-        int pos = input.substr(index, length_until_end).find(sep);
-        string token = input.substr(index, pos == -1 ? length_until_end : pos);
+        size_t length_until_end = input.length() - index;
+        size_t pos = input.substr(index, length_until_end).find(sep);
+        string token = input.substr(index, pos == std::string::npos ? length_until_end : pos);
         if (token != sep) {
-            unsigned short x = strtoul(token.c_str(), nullptr, 16);
+            unsigned short x = (unsigned short)strtoul(token.c_str(), nullptr, 16);
 
             data.push_back(x);
         }

@@ -3,12 +3,14 @@
 #include <iostream>
 using namespace std;
 
-Memory::Memory():ram(65536){}
+Memory::Memory(): ram(65536){
+    rA = 0;
+}
 void Memory::set(bool a, bool b, bool d, bool ra, bool prt, bool cl, unsigned short X) {
     A.set(a, cl, X);
     B.set(b, cl, X);
     D.set(d, cl, X);
-    ram.set(A.output(), ra, cl, X);
+    ram.set(A.output(), ra, cl, (unsigned char)X);
     rA = ram.output();
 
     // printf("%x %x %x %x\n", A.output(), B.output(), D.output(), rA);
@@ -66,6 +68,7 @@ void ControlUnit::set(unsigned short I, unsigned short A, unsigned short B, unsi
 Computer::Computer(std::vector<unsigned short> R) {
     ROM = R;
     ROM_addr = 0;
+    ctrl = ControlUnit();
 }
 void Computer::pulse() {
     unsigned short ROM_val = ROM.at(ROM_addr);

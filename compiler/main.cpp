@@ -18,7 +18,7 @@ vector<char> compile(string input) {
         boost::algorithm::to_lower(low);
 
         size_t skip_ws = token::string::find_not_whitespace(s);
-        int substr_i = skip_ws == string::npos ? 0 : skip_ws;
+        size_t substr_i = skip_ws == string::npos ? 0 : skip_ws;
         low = low.substr(substr_i);
 
         std::vector<std::string> sep{" ", "\t", "\n", "\r", "\f", "\v"};
