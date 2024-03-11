@@ -10,10 +10,10 @@ using namespace boost::algorithm;
 
 std::vector<std::string> token::string::split(std::string s, std::string sep) {
     std::vector<std::string> data;
-    int index = 0;
+    size_t index = 0;
     while (1) {
-        int length_until_end = s.length() - index;
-        int pos = s.substr(index, length_until_end).find(sep);
+        size_t length_until_end = s.length() - index;
+        size_t pos = s.substr(index, length_until_end).find(sep);
         std::string token = s.substr(index, pos == -1 ? length_until_end : pos);
         if (token != sep) {
             data.push_back(token);
@@ -44,7 +44,7 @@ std::string token::string::get_first_keyword(std::string input, std::string sep)
 size_t token::string::find_whitespace(std::string input) {
     for (int i = 0; i < input.size(); i++) {
         char c = input[i];
-        const char *it = std::find(whitespaces.begin(), whitespaces.end(), c);
+        std::array<char, 6>::const_iterator it = std::find(whitespaces.begin(), whitespaces.end(), c);
 
         if (it != whitespaces.end()) return i;
     }
@@ -55,7 +55,7 @@ size_t token::string::find_whitespace(std::string input) {
 size_t token::string::find_not_whitespace(std::string input) {
     for (int i = 0; i < input.size(); i++) {
         char c = input[i];
-        const char *it = std::find(whitespaces.begin(), whitespaces.end(), c);
+        std::array<char, 6>::const_iterator it = std::find(whitespaces.begin(), whitespaces.end(), c);
 
         if (it == whitespaces.end()) return i;
     }
@@ -101,7 +101,7 @@ char token::conversion::parse8(std::string input, std::vector<std::string> sep, 
         throw err_message;
     }
 
-    return o;
+    return (char)o;
 }
 
 short token::conversion::parse_hex(std::string input, std::vector<std::string> sep, size_t *end) {
@@ -148,8 +148,8 @@ short token::conversion::parse_hex(std::string input, std::vector<std::string> s
 
     short output = 0;
     try {
-        output = stoul(input, nullptr, 16);
-    } catch (const std::invalid_argument &e) {
+        output = (short)stoul(input, nullptr, 16);
+    } catch (...) {
         throw err_message;
     }
 
@@ -287,8 +287,8 @@ short token::conversion::parse_num(std::string input, std::vector<std::string> s
     }
 
     try {
-        output = stoul(input);
-    } catch (const std::invalid_argument &e) {
+        output = (short)stoul(input);
+    } catch (...) {
         throw err_message;
     }
 
