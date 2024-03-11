@@ -1,0 +1,40 @@
+﻿{
+    "configurations": [
+        {
+            "name": "x64-Debug-Win",
+            "generator": "Ninja",
+            "configurationType": "Debug",
+            "inheritEnvironments": [ "msvc_x64_x64" ],
+            "buildRoot": "${projectDir}\\out\\build\\${name}",
+            "installRoot": "${projectDir}\\out\\install\\${name}",
+            "cmakeCommandArgs": "",
+            "buildCommandArgs": "",
+            "ctestCommandArgs": "",
+            "variables": [
+                {
+                    "name": "include",
+                    "value": "C:\\Program Files\\boost_1_84_0",
+                    "type": "STRING"
+                }
+            ]
+        },
+        {
+            "name": "x64-Release-Win",
+            "generator": "Ninja",
+            "configurationType": "Release",
+            "buildRoot": "${projectDir}\\out\\build\\${name}",
+            "installRoot": "${projectDir}\\out\\install\\${name}",
+            "cmakeCommandArgs": "",
+            "buildCommandArgs": "",
+            "ctestCommandArgs": "",
+            "inheritEnvironments": [ "msvc_x64_x64" ],
+            "variables": [
+                {
+                    "name": "include",
+                    "value": "C:\\Program Files\\boost_1_84_0",
+                    "type": "STRING"
+                }
+            ]
+        }
+    ]
+}
