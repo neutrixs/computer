@@ -4,7 +4,7 @@
 #include <boost/format.hpp>
 #include <ctype.h>
 #include "set.h"
-#include "token.h"
+#include "../token.h"
 
 std::vector<char> set::compile(std::string input, int current_line) {
     std::vector<std::string> sep{" ", "\t", "\n", "\r", "\f", "\v"};

@@ -2,7 +2,7 @@
 #include <fstream>
 #include <boost/algorithm/string/case_conv.hpp>
 #include "token.h"
-#include "set.h"
+#include "keywords/set.h"
 using namespace std;
 
 //0x0 - 0x03: reserved address for 'backup'

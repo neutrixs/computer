@@ -1,7 +1,7 @@
 set(
 	SOURCES
 	"main.cpp"
-	"set.cpp"
+	"keywords/set.cpp"
 	"token.cpp"
 )
 
