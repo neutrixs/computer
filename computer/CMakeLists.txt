@@ -1,9 +1,10 @@
 set(
 	SOURCES
 	"main.cpp"
-	"alu.cpp"
-	"memory.cpp"
-	"processor.cpp"
+	"components/alu.cpp"
+	"components/memory.cpp"
+	"components/processor.cpp"
+	"loader.cpp"
 )
 
 if(DEFINED BOOST_ROOT)
