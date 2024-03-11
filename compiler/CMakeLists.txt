@@ -5,10 +5,10 @@ set(
 	"token.cpp"
 )
 
-if(DEFINED include)
-	include_directories(${include})
+if(DEFINED BOOST_ROOT)
+	include_directories(${BOOST_ROOT})
 else()
-	message(WARNING "include variable is undefined")
+	message(WARNING "BOOST_ROOT variable is undefined")
 endif()
 
 add_executable(compiler ${SOURCES})
