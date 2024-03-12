@@ -2,13 +2,14 @@
 #include <sstream>
 #include <vector>
 #include <fstream>
+#include <stdint.h>
 #include "loader.h"
 #include "components/processor.h"
 using namespace std;
 
 int main() {
     string executable = read("executable");
-    vector<unsigned short> ROM = strtovec16(executable);
+    vector<uint16_t> ROM = strtovec16(executable);
 
     Computer comp(ROM);
 

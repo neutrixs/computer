@@ -1,5 +1,6 @@
 #ifndef ALU_H
 #define ALU_H
+#include <stdint.h>
 
 class LU {
 public:
@@ -9,10 +10,10 @@ public:
      * 1,0: X >> Y
      * 1,1: X << Y
     */
-    void set(bool op0, bool op1, unsigned short X, unsigned short Y);
-    unsigned short output();
+    void set(bool op0, bool op1, uint16_t X, uint16_t Y);
+    uint16_t output();
 private:
-    unsigned short result;
+    uint16_t result;
 };
 
 class AU {
@@ -23,10 +24,10 @@ public:
      * 1,0: X - Y
      * 1,1: X - 1
     */
-    void set(bool op0, bool op1, unsigned short X, unsigned short Y);
-    unsigned short output();
+    void set(bool op0, bool op1, uint16_t X, uint16_t Y);
+    uint16_t output();
 private:
-    unsigned short result;
+    uint16_t result;
 };
 
 class ALU {
@@ -36,17 +37,17 @@ public:
      * sw: swap X and Y
      * zx: makes X zero (if used with sw then Y is zero)
     */
-    void set(bool u, bool op0, bool op1, bool sw, bool zx, unsigned short X, unsigned short Y);
-    unsigned short output();
+    void set(bool u, bool op0, bool op1, bool sw, bool zx, uint16_t X, uint16_t Y);
+    uint16_t output();
 private:
-    unsigned short result;
+    uint16_t result;
     LU lu;
     AU au;
 };
 
 class Condition {
 public:
-    void set(bool lt, bool eq, bool gt, unsigned short X);
+    void set(bool lt, bool eq, bool gt, uint16_t X);
     bool output();
 private:
     bool result;

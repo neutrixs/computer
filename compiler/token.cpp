@@ -63,9 +63,9 @@ size_t token::string::find_not_whitespace(std::string input) {
     return std::string::npos;
 }
 
-std::vector<char> token::conversion::short_to_char(std::vector<short>& source) {
-    std::vector<char> output;
-    for (short& d : source) {
+std::vector<uint8_t> token::conversion::short_to_char(std::vector<uint16_t>& source) {
+    std::vector<uint8_t> output;
+    for (uint16_t& d : source) {
         char start = (d >> 8) & 255;
         char end = d & 255;
 
@@ -76,7 +76,7 @@ std::vector<char> token::conversion::short_to_char(std::vector<short>& source) {
     return output;
 }
 
-short token::conversion::parse16(std::string input, std::vector<std::string> sep, size_t* end) {
+uint16_t token::conversion::parse16(std::string input, std::vector<std::string> sep, size_t* end) {
     short output = 0;
     input = input.substr(token::string::find_not_whitespace(input));
 
@@ -96,17 +96,17 @@ short token::conversion::parse16(std::string input, std::vector<std::string> sep
     return output;
 }
 
-char token::conversion::parse8(std::string input, std::vector<std::string> sep, size_t* end) {
-    unsigned short o = parse16(input, sep, end);
+uint8_t token::conversion::parse8(std::string input, std::vector<std::string> sep, size_t* end) {
+    uint16_t o = parse16(input, sep, end);
     if (o > 255) {
         auto err_message = boost::str(boost::format("At line %2%: input %1% (%3%), is more than the allowed of 8B (255)") % input % "%1%" % o);
         throw err_message;
     }
 
-    return (char)o;
+    return (uint8_t)o;
 }
 
-short token::conversion::parse_hex(std::string input, std::vector<std::string> sep, size_t* end) {
+uint16_t token::conversion::parse_hex(std::string input, std::vector<std::string> sep, size_t* end) {
     size_t after_num_ends = std::min(std::string::npos, token::string::find_whitespace(input));
     for (std::string& s : sep) {
         after_num_ends = std::min(after_num_ends, input.find(s));
@@ -150,9 +150,9 @@ short token::conversion::parse_hex(std::string input, std::vector<std::string> s
         }
     }
 
-    short output = 0;
+    uint16_t output = 0;
     try {
-        output = (short)stoul(input, nullptr, 16);
+        output = (uint16_t)stoul(input, nullptr, 16);
     }
     catch (...) {
         throw err_message;
@@ -161,7 +161,7 @@ short token::conversion::parse_hex(std::string input, std::vector<std::string> s
     return output;
 }
 
-short token::conversion::parse_char(std::string input, std::vector<std::string> sep, size_t* end) {
+uint16_t token::conversion::parse_char(std::string input, std::vector<std::string> sep, size_t* end) {
     input = input.substr(1);
     char output = 0;
     bool added = false;
@@ -239,10 +239,10 @@ short token::conversion::parse_char(std::string input, std::vector<std::string> 
     }
 
     *end = std::string::npos;
-    return output;
+    return ((uint16_t)output) & 255;
 }
 
-short token::conversion::parse_num(std::string input, std::vector<std::string> sep, size_t* end) {
+uint16_t token::conversion::parse_num(std::string input, std::vector<std::string> sep, size_t* end) {
     size_t after_num_ends = std::min(std::string::npos, token::string::find_whitespace(input));
     for (std::string& s : sep) {
         after_num_ends = std::min(after_num_ends, input.find(s));
@@ -277,7 +277,7 @@ short token::conversion::parse_num(std::string input, std::vector<std::string> s
         }
     }
 
-    short output = 0;
+    uint16_t output = 0;
     size_t sep_index = std::string::npos;
     for (std::string& s : sep) {
         sep_index = std::min(sep_index, input.find(s));

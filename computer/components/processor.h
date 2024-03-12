@@ -3,7 +3,7 @@
 #include "memory.h"
 #include "alu.h"
 #include <vector>
-using namespace std;
+#include <stdint.h>
 
 /** do not actually use the b register. only used for some operations :) data might be lost if you try to do so.
  * put it in ram instead or a and d
@@ -30,22 +30,22 @@ public:
     Register16 A;
     Register16 B;
     Register16 D;
-    unsigned short rA;
-    void set(bool a, bool b, bool d, bool ra, bool prt, bool cl, unsigned short X);
+    uint16_t rA;
+    void set(bool a, bool b, bool d, bool ra, bool prt, bool cl, uint16_t X);
 private:
     RAM ram;
 };
 
 class Instruction {
 public:
-    unsigned short R;
+    uint16_t R;
     bool a;
     bool b;
     bool d;
     bool ra;
     bool j;
     bool prt;
-    void set(unsigned short I, unsigned short A, unsigned short B, unsigned short D, unsigned short rA);
+    void set(uint16_t I, uint16_t A, uint16_t B, uint16_t D, uint16_t rA);
 private:
     Condition cond;
     ALU alu;
@@ -53,28 +53,28 @@ private:
 
 class ControlUnit {
 public:
-    unsigned short R;
+    uint16_t R;
     bool a;
     bool b;
     bool d;
     bool ra;
     bool j;
     bool prt;
-    void set(unsigned short I, unsigned short A, unsigned short B, unsigned short D, unsigned short rA);
+    void set(uint16_t I, uint16_t A, uint16_t B, uint16_t D, uint16_t rA);
 private:
     Instruction instruction;
 };
 
 class Computer {
 public:
-    Computer(std::vector<unsigned short> R);
-    std::vector<unsigned short> ROM;
+    Computer(std::vector<uint16_t> R);
+    std::vector<uint16_t> ROM;
     void pulse();
     // private:
     ControlUnit ctrl;
     Memory mem;
     bool cl = 0;
-    unsigned short ROM_addr;
+    uint16_t ROM_addr;
 };
 
 #endif

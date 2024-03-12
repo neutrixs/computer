@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <fstream>
+#include <stdint.h>
 
 std::string read(std::string path) {
     std::ifstream infile(path, std::ios::binary);
@@ -26,8 +27,8 @@ std::string read(std::string path) {
     }
 }
 
-std::vector<unsigned short> strtovec16(std::string input) {
-    std::vector<unsigned short> output;
+std::vector<uint16_t> strtovec16(std::string input) {
+    std::vector<uint16_t> output;
     for (int i = 0; i < input.size(); i++) {
         if (!(i % 2)) {
             output.push_back((input[i] & 255) << 8);
@@ -40,15 +41,15 @@ std::vector<unsigned short> strtovec16(std::string input) {
     return output;
 }
 
-std::vector<unsigned short> parse(std::string input, std::string sep) {
-    std::vector<unsigned short> data;
+std::vector<uint16_t> parse(std::string input, std::string sep) {
+    std::vector<uint16_t> data;
     size_t index = 0;
     while (1) {
         size_t length_until_end = input.length() - index;
         size_t pos = input.substr(index, length_until_end).find(sep);
         std::string token = input.substr(index, pos == std::string::npos ? length_until_end : pos);
         if (token != sep) {
-            unsigned short x = (unsigned short)strtoul(token.c_str(), nullptr, 16);
+            uint16_t x = (uint16_t)strtoul(token.c_str(), nullptr, 16);
 
             data.push_back(x);
         }

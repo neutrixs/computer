@@ -2,9 +2,10 @@
 #define LOADER_H
 #include <string>
 #include <vector>
+#include <stdint.h>
 
 std::string read(std::string path);
-std::vector<unsigned short> strtovec16(std::string input);
-std::vector<unsigned short> parse(std::string input, std::string sep);
+std::vector<uint16_t> strtovec16(std::string input);
+std::vector<uint16_t> parse(std::string input, std::string sep);
 
 #endif

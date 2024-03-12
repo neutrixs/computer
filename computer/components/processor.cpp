@@ -1,28 +1,28 @@
 #include "processor.h"
 #include "memory.h"
 #include <iostream>
-using namespace std;
+#include <stdint.h>
 
 Memory::Memory() : ram(65536) {
     rA = 0;
 }
-void Memory::set(bool a, bool b, bool d, bool ra, bool prt, bool cl, unsigned short X) {
+void Memory::set(bool a, bool b, bool d, bool ra, bool prt, bool cl, uint16_t X) {
     A.set(a, cl, X);
     B.set(b, cl, X);
     D.set(d, cl, X);
-    ram.set(A.output(), ra, cl, (unsigned char)X);
+    ram.set(A.output(), ra, cl, (uint8_t)X);
     rA = ram.output();
 
     // printf("%x %x %x %x\n", A.output(), B.output(), D.output(), rA);
 
     if (cl && prt) {
-        cout << (unsigned char)X;
+        std::cout << (uint8_t)X;
     }
 }
 
-void Instruction::set(unsigned short I, unsigned short A, unsigned short B, unsigned short D, unsigned short rA) {
-    unsigned short X;
-    unsigned short Y;
+void Instruction::set(uint16_t I, uint16_t A, uint16_t B, uint16_t D, uint16_t rA) {
+    uint16_t X;
+    uint16_t Y;
     if (I & 1 << 14) X = B;
     else X = D;
     if (I & 1 << 12) Y = rA;
@@ -40,7 +40,7 @@ void Instruction::set(unsigned short I, unsigned short A, unsigned short B, unsi
     j = cond.output();
 }
 
-void ControlUnit::set(unsigned short I, unsigned short A, unsigned short B, unsigned short D, unsigned short rA) {
+void ControlUnit::set(uint16_t I, uint16_t A, uint16_t B, uint16_t D, uint16_t rA) {
     // printf("0x%x: ", I);
     switch (I & 1 << 15) {
     case 0:
@@ -65,16 +65,15 @@ void ControlUnit::set(unsigned short I, unsigned short A, unsigned short B, unsi
     }
 }
 
-Computer::Computer(std::vector<unsigned short> R) {
+Computer::Computer(std::vector<uint16_t> R) {
     ROM = R;
     ROM_addr = 0;
     ctrl = ControlUnit();
 }
 void Computer::pulse() {
-    unsigned short ROM_val = ROM.at(ROM_addr);
+    uint16_t ROM_val = ROM.at(ROM_addr);
     ctrl.set(ROM_val, mem.A.output(), mem.B.output(), mem.D.output(), mem.rA);
     mem.set(ctrl.a, ctrl.b, ctrl.d, ctrl.ra, ctrl.prt, cl, ctrl.R);
-    // ctrl.set(ROM_val, mem.A.output(), mem.B.output(), mem.D.output(), mem.rA);
 
     if (cl) {
         if (ctrl.j) {

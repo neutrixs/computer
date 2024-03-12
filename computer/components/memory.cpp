@@ -1,10 +1,10 @@
 #include "memory.h"
 
-RAM::RAM(unsigned int size) {
-    memory = std::vector<unsigned char>(size);
+RAM::RAM(uint32_t size) {
+    memory = std::vector<uint8_t>(size);
     outval = 0;
 }
-void RAM::set(unsigned short ad, bool st, bool cl, unsigned char d) {
+void RAM::set(uint16_t ad, bool st, bool cl, uint8_t d) {
     if (cl) {
         outval = memory[ad];
     }
@@ -12,7 +12,7 @@ void RAM::set(unsigned short ad, bool st, bool cl, unsigned char d) {
         memory[ad] = d;
     }
 }
-unsigned char RAM::output() {
+uint8_t RAM::output() {
     return outval;
 }
 
@@ -20,7 +20,7 @@ Register16::Register16() {
     reg = 0;
     outval = 0;
 }
-void Register16::set(bool st, bool cl, unsigned short d, unsigned char pos, bool clear) {
+void Register16::set(bool st, bool cl, uint16_t d, uint8_t pos, bool clear) {
     if (cl) {
         outval = reg;
     }
@@ -29,20 +29,20 @@ void Register16::set(bool st, bool cl, unsigned short d, unsigned char pos, bool
         reg |= d << pos;
     }
 }
-unsigned short Register16::output(int shift_right) {
+uint16_t Register16::output(uint32_t shift_right) {
     return outval >> shift_right;
 }
 
 Counter::Counter() {
     reg.set(1, 1, 0);
 }
-void Counter::set(bool st, bool cl, unsigned short d) {
-    unsigned short input;
+void Counter::set(bool st, bool cl, uint16_t d) {
+    uint16_t input;
     if (st) input = d;
     else input = reg.output() + 1;
 
     reg.set(1, cl, input);
 }
-unsigned short Counter::output() {
+uint16_t Counter::output() {
     return reg.output();
 }

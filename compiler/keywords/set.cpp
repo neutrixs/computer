@@ -3,6 +3,7 @@
 #include <iostream>
 #include <boost/format.hpp>
 #include <ctype.h>
+#include <stdint.h>
 #include "set.h"
 #include "../token.h"
 
@@ -21,9 +22,9 @@ std::vector<char> set::compile(std::string input, int current_line) {
     bool is_normal_num = isdigit(input[0]);
 
     bool to_ram = false;
-    short dest_instruction = 0;
-    short address = 0;
-    short data = 0;
+    uint16_t dest_instruction = 0;
+    uint16_t address = 0;
+    uint16_t data = 0;
     size_t next = 0;
 
     if (hex_pos == 0 || char_pos == 0 || is_normal_num) {
@@ -106,11 +107,11 @@ std::vector<char> set::compile(std::string input, int current_line) {
     return instructions;
 }
 
-std::vector<short> set::gen_instructions(short dest_instruction, short data, short address) {
-    std::vector<short> instructions;
+std::vector<uint16_t> set::gen_instructions(uint16_t dest_instruction, uint16_t data, uint16_t address) {
+    std::vector<uint16_t> instructions;
     bool is_dest_a = dest_instruction == 1 << 5;
     bool is_dest_ra = dest_instruction == 1 << 3;
-#define i(a) instructions.push_back((short)a)
+    #define i(a) instructions.push_back((short)a)
 
     if (!is_dest_a) {
         // backup A to 0x0 and 0x1
@@ -150,8 +151,8 @@ std::vector<short> set::gen_instructions(short dest_instruction, short data, sho
 
     // we cannot put data where bit 15 is 1.
     // we will copy the data. data 1 will be data from bit 8-15, data 2 will be from bit 0-7 (8 smallest bit)
-    short data1 = (data >> 8) & 255;
-    short data2 = data & 255;
+    uint16_t data1 = (data >> 8) & 255;
+    uint16_t data2 = data & 255;
 
     // place data 1 to a and move it to b, shift left by 8
     i(data1); i(0xa480);
@@ -162,7 +163,7 @@ std::vector<short> set::gen_instructions(short dest_instruction, short data, sho
 
     if (is_dest_ra) {
         // put the target address to A
-        std::vector<short> addr_instruct = gen_instructions(1 << 5, address);
+        std::vector<uint16_t> addr_instruct = gen_instructions(1 << 5, address);
         instructions.insert(instructions.end(), addr_instruct.begin(), addr_instruct.end());
 
         // move D to ra

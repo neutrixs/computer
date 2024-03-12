@@ -1,6 +1,6 @@
 #include "alu.h"
 
-void LU::set(bool op0, bool op1, unsigned short X, unsigned short Y) {
+void LU::set(bool op0, bool op1, uint16_t X, uint16_t Y) {
     switch (op0) {
     case 0:
         if (op1) result = X & Y;
@@ -12,11 +12,11 @@ void LU::set(bool op0, bool op1, unsigned short X, unsigned short Y) {
         break;
     }
 }
-unsigned short LU::output() {
+uint16_t LU::output() {
     return result;
 }
 
-void AU::set(bool op0, bool op1, unsigned short X, unsigned short Y) {
+void AU::set(bool op0, bool op1, uint16_t X, uint16_t Y) {
     switch (op0) {
     case 0:
         if (op1) result = X + 1;
@@ -27,12 +27,12 @@ void AU::set(bool op0, bool op1, unsigned short X, unsigned short Y) {
         else result = X - Y;
     }
 }
-unsigned short AU::output() {
+uint16_t AU::output() {
     return result;
 }
 
-void ALU::set(bool u, bool op0, bool op1, bool sw, bool zx, unsigned short X, unsigned short Y) {
-    unsigned short A, B;
+void ALU::set(bool u, bool op0, bool op1, bool sw, bool zx, uint16_t X, uint16_t Y) {
+    uint16_t A, B;
     if (sw) A = Y, B = X;
     else A = X, B = Y;
     if (zx) A = 0;
@@ -46,11 +46,11 @@ void ALU::set(bool u, bool op0, bool op1, bool sw, bool zx, unsigned short X, un
         result = lu.output();
     }
 }
-unsigned short ALU::output() {
+uint16_t ALU::output() {
     return result;
 }
 
-void Condition::set(bool lt, bool eq, bool gt, unsigned short X) {
+void Condition::set(bool lt, bool eq, bool gt, uint16_t X) {
     result = false;
     if (lt) result = result || (X < 0);
     if (eq) result = result || (X == 0);
