@@ -3,6 +3,7 @@ set(
 	"main.cpp"
 	"keywords/set.cpp"
 	"token.cpp"
+	"compile.cpp"
 )
 
 if(DEFINED BOOST_ROOT)
@@ -11,4 +12,5 @@ else()
 	message(WARNING "BOOST_ROOT variable is undefined")
 endif()
 
+link_directories("${BOOST_ROOT}/stage/lib")
 add_executable(compiler ${SOURCES})
