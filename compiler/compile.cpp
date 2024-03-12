@@ -8,7 +8,7 @@
 //0x0 - 0x03: reserved address for 'backup'
 std::vector<char> compile(std::string input) {
     std::vector<char> output;
-    std::vector<std::string> lines = token::string::split(input, "\n");
+    std::vector<std::string> lines = token::string::split(input, ";");
     for (int i = 0; i < lines.size(); i++) {
         std::string s = lines[i];
         if (s == "") continue;
