@@ -13,4 +13,5 @@ else()
 	message(WARNING "BOOST_ROOT variable is undefined")
 endif()
 
+link_directories("${BOOST_ROOT}/stage/lib")
 add_executable(computer ${SOURCES})
