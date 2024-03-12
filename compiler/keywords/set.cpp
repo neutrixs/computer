@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 #include <boost/format.hpp>
+#include <boost/algorithm/string/case_conv.hpp>
 #include <ctype.h>
 #include <stdint.h>
 #include "set.h"
@@ -14,10 +15,13 @@ std::vector<char> set::compile(std::string input, int current_line) {
 
     size_t nextcmd_pos = token::string::find_not_whitespace(inputc);
     inputc = inputc.substr(nextcmd_pos);
-    size_t end_target_input = token::string::find_whitespace(inputc);
-    std::string dest_reg = inputc.substr(0, end_target_input);
+    std::string inputc_low = inputc;
+    boost::algorithm::to_lower(inputc_low);
 
-    size_t hex_pos = inputc.find("0x");
+    size_t end_target_input = token::string::find_whitespace(inputc);
+    std::string dest_reg = inputc_low.substr(0, end_target_input);
+
+    size_t hex_pos = inputc_low.find("0x");
     size_t char_pos = inputc.find("'");
     bool is_normal_num = isdigit(input[0]);
 

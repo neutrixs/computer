@@ -1,6 +1,7 @@
 #include <boost/algorithm/string/case_conv.hpp>
 #include <iostream>
 #include <fstream>
+#include <locale>
 #include "token.h"
 #include "compile.h"
 #include "keywords/set.h"
@@ -14,19 +15,20 @@ std::vector<char> compile(std::string input) {
         if (s == "") continue;
 
         int index = 0;
-        std::string low = s;
-        boost::algorithm::to_lower(low);
 
         size_t skip_ws = token::string::find_not_whitespace(s);
         size_t substr_i = skip_ws == std::string::npos ? 0 : skip_ws;
-        low = low.substr(substr_i);
+        s = s.substr(substr_i);
+
+        std::string low = s;
+        boost::algorithm::to_lower(low);
 
         std::vector<std::string> sep{ " ", "\t", "\n", "\r", "\f", "\v" };
         std::string first_keyword = token::string::get_first_keyword(low, sep);
         switch (token::conversion::str2int(first_keyword.c_str())) {
         case token::conversion::str2int("set"): {
             try {
-                std::vector<char> instruction = set::compile(low, i + 1);
+                std::vector<char> instruction = set::compile(s, i + 1);
                 for (char& byte : instruction) {
                     output.push_back(byte);
                 }
