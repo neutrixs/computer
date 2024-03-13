@@ -10,9 +10,10 @@
 //0x0 - 0x03: reserved address for 'backup'
 std::vector<char> compile(std::string input) {
     std::vector<char> output;
-    std::vector<std::string> lines = token::string::split(input, ";");
-    for (int i = 0; i < lines.size(); i++) {
-        std::string s = lines[i];
+    std::vector<std::string> statements = token::string::split(input, ";");
+    int current_line = 0;
+    for (int i = 0; i < statements.size(); i++) {
+        std::string s = statements[i];
         if (s == "") continue;
 
         int index = 0;
@@ -29,7 +30,7 @@ std::vector<char> compile(std::string input) {
         switch (token::conversion::str2int(first_keyword.c_str())) {
         case token::conversion::str2int("set"):
             try {
-                std::vector<char> instruction = set::compile(s, i + 1);
+                std::vector<char> instruction = set::compile(s, current_line + 1);
                 for (char& byte : instruction) {
                     output.push_back(byte);
                 }
@@ -41,7 +42,7 @@ std::vector<char> compile(std::string input) {
             break;
         case token::conversion::str2int("mov"):
             try {
-                std::vector<char> instruction = mov::compile(s, i + 1);
+                std::vector<char> instruction = mov::compile(s, current_line + 1);
                 for (char& byte : instruction) {
                     output.push_back(byte);
                 }
@@ -52,6 +53,8 @@ std::vector<char> compile(std::string input) {
             }
             break;
         }
+
+        current_line += token::string::count_occurences(statements[i], std::string("\n"));
     }
 
     return output;

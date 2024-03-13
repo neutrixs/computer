@@ -63,6 +63,17 @@ size_t token::string::find_not_whitespace(std::string input) {
     return std::string::npos;
 }
 
+int token::string::count_occurences(std::string& str, std::string& what) {
+    int count = 0;
+    size_t pos = 0;
+
+    while ((pos = str.find(what, pos)) != std::string::npos) {
+        count++;
+        pos += what.length();
+    }
+    return count;
+}
+
 std::vector<uint8_t> token::conversion::short_to_char(std::vector<uint16_t>& source) {
     std::vector<uint8_t> output;
     for (uint16_t& d : source) {

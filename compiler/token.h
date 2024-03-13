@@ -13,6 +13,7 @@ namespace token {
         std::string get_first_keyword(std::string input, std::string sep);
         size_t find_whitespace(std::string input);
         size_t find_not_whitespace(std::string input);
+        int count_occurences(std::string& str, std::string& what);
     }
 
     namespace conversion {
