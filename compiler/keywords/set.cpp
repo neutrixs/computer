@@ -23,7 +23,7 @@ std::vector<char> set::compile(std::string input, int current_line) {
 
     size_t hex_pos = inputc_low.find("0x");
     size_t char_pos = inputc.find("'");
-    bool is_normal_num = isdigit(input[0]);
+    bool is_normal_num = isdigit(inputc[0]);
 
     bool to_ram = false;
     uint16_t dest_instruction = 0;
