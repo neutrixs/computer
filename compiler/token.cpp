@@ -79,8 +79,10 @@ std::vector<uint8_t> token::conversion::short_to_char(std::vector<uint16_t>& sou
 uint16_t token::conversion::parse16(std::string input, std::vector<std::string> sep, size_t* end) {
     short output = 0;
     input = input.substr(token::string::find_not_whitespace(input));
+    auto input_low = input;
+    boost::algorithm::to_lower(input_low);
 
-    size_t hex_pos = input.find("0x");
+    size_t hex_pos = input_low.find("0x");
     size_t char_pos = input.find("'");
 
     if (hex_pos == 0) {
