@@ -5,6 +5,7 @@
 #include "token.h"
 #include "compile.h"
 #include "keywords/set.h"
+#include "keywords/mov.h"
 
 //0x0 - 0x03: reserved address for 'backup'
 std::vector<char> compile(std::string input) {
@@ -26,7 +27,7 @@ std::vector<char> compile(std::string input) {
         std::vector<std::string> sep{ " ", "\t", "\n", "\r", "\f", "\v" };
         std::string first_keyword = token::string::get_first_keyword(low, sep);
         switch (token::conversion::str2int(first_keyword.c_str())) {
-        case token::conversion::str2int("set"): {
+        case token::conversion::str2int("set"):
             try {
                 std::vector<char> instruction = set::compile(s, i + 1);
                 for (char& byte : instruction) {
@@ -34,11 +35,22 @@ std::vector<char> compile(std::string input) {
                 }
             }
             catch (std::string e) {
-                std::cout << e << std::endl;
+                std::cerr << e << std::endl;
                 std::exit(1);
             }
             break;
-        }
+        case token::conversion::str2int("mov"):
+            try {
+                std::vector<char> instruction = mov::compile(s, i + 1);
+                for (char& byte : instruction) {
+                    output.push_back(byte);
+                }
+            }
+            catch (std::string& e) {
+                std::cerr << e << std::endl;
+                std::exit(1);
+            }
+            break;
         }
     }
 

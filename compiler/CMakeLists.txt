@@ -4,7 +4,7 @@ set(
 	"keywords/set.cpp"
 	"token.cpp"
 	"compile.cpp"
-)
+ "keywords/mov.cpp")
 
 if(DEFINED BOOST_ROOT)
 	include_directories(${BOOST_ROOT})
