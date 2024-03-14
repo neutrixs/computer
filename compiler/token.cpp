@@ -182,7 +182,7 @@ uint16_t token::conversion::parse_char(std::string input, std::vector<std::strin
     bool finish = false;
 
     auto err_message = boost::str(boost::format("At line %2%: Invalid char format %1%") % ("'" + input) % "%1%");
-
+    *end = std::string::npos;
 
     for (int i = 0; i < input.size(); i++) {
         char c = input[i];
@@ -251,7 +251,8 @@ uint16_t token::conversion::parse_char(std::string input, std::vector<std::strin
         }
     }
 
-    *end = std::string::npos;
+    if (!finish) throw err_message;
+
     return ((uint16_t)output) & 255;
 }
 
