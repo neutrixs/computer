@@ -23,9 +23,6 @@ computer {EXECUTABLE_FILE}
 
 # CPU Simulation Assembly Syntax
 
-## Introduction
-This document provides the syntax documentation for the custom assembly language used in the CPU simulation. This simulation uses its own syntax to interact with virtual registers and memory.
-
 ## Syntax Overview
 
 The language is semicolon-separated and is case insensitive. Currently, it currently supports basic operations such as setting values and moving data between registers and memory addresses. More will be added in the future.
