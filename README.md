@@ -27,7 +27,7 @@ computer {EXECUTABLE_FILE}
 
 The language is semicolon-separated and is case insensitive. Currently, it currently supports basic operations such as setting values and moving data between registers and memory addresses. More will be added in the future.
 
-### Registers
+## Registers
 
 The simulation supports three registers:
 
@@ -37,19 +37,19 @@ The simulation supports three registers:
 | D        | Read and Write          | -     |
 | PRT      | Write Only              | Can only be used as a destination (`DEST`) in instructions. |
 
-### Memory Addresses
+## Memory Addresses
 
 Memory addresses can be represented by either a number or a hexadecimal values starting with `0x`.
 
-### Data Representation
+## Data Representation
 
 - Register values are 2 byte wide (16 bit).
 - Memory (RAM) values are 1 byte wide (8 bit).
 - Data can be represented in hexadecimal, decimal, or as a single-byte character in a single quote (e.g., `'A'`, `'\n'`, `'\t'`).
 
-### Commands
+## Commands
 
-#### SET
+### SET
 
 The `SET` command is used to assign values to registers or memory addresses.
 
@@ -67,7 +67,7 @@ SET A 0xFF;     // Sets register A with the value 0xFF
 SET 0x23 'A';   // Sets memory address 0x23 with the ASCII value of 'A'
 ```
 
-#### MOV
+### MOV
 
 The `MOV` command copies data from the source to the destination without clearing the source.
 
