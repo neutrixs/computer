@@ -27,8 +27,7 @@ std::vector<char> compile(std::string input) {
 
         std::vector<std::string> sep{ " ", "\t", "\n", "\r", "\f", "\v" };
         std::string first_keyword = token::string::get_first_keyword(low, sep);
-        switch (token::conversion::str2int(first_keyword.c_str())) {
-        case token::conversion::str2int("set"):
+        if (first_keyword == "set") {
             try {
                 std::vector<char> instruction = set::compile(s, current_line + 1);
                 for (char& byte : instruction) {
@@ -39,8 +38,8 @@ std::vector<char> compile(std::string input) {
                 std::cerr << e << std::endl;
                 std::exit(1);
             }
-            break;
-        case token::conversion::str2int("mov"):
+        }
+        else if (first_keyword == "mov") {
             try {
                 std::vector<char> instruction = mov::compile(s, current_line + 1);
                 for (char& byte : instruction) {
@@ -51,7 +50,6 @@ std::vector<char> compile(std::string input) {
                 std::cerr << e << std::endl;
                 std::exit(1);
             }
-            break;
         }
 
         current_line += token::string::count_occurences(statements[i], std::string("\n"));

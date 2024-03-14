@@ -17,9 +17,6 @@ namespace token {
     }
 
     namespace conversion {
-        constexpr uint32_t str2int(const char* str, int32_t h = 0) {
-            return !str[h] ? 5381 : (str2int(str, h + 1) * 33) ^ str[h];
-        }
         std::vector<uint8_t> short_to_char(std::vector<uint16_t>& source);
         uint16_t parse16(std::string input, std::vector<std::string> sep, size_t* end);
         uint8_t parse8(std::string input, std::vector<std::string> sep, size_t* end);
