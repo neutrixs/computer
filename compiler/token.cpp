@@ -8,6 +8,8 @@
 #include <boost/format.hpp>
 using namespace boost::algorithm;
 
+std::vector<std::string> token::string::sep = {" ", "\t", "\n", "\r", "\f", "\v"};
+
 std::vector<std::string> token::string::split(std::string s, std::string sep) {
     std::vector<std::string> data;
     size_t index = 0;
@@ -62,6 +64,23 @@ size_t token::string::find_not_whitespace(std::string input) {
 
     return std::string::npos;
 }
+
+size_t token::string::find_next_syntax(std::string input, std::vector<std::string> sep) {
+    size_t pos = 0;
+    size_t sep_pos = std::string::npos;
+    for (auto& s : sep) {
+        sep_pos = std::min(sep_pos, input.find(s));
+    }
+
+    if (sep_pos == std::string::npos) return std::string::npos;
+    pos += sep_pos;
+    input = input.substr(sep_pos);
+
+    size_t start_pos = find_not_whitespace(input);
+    if (start_pos == std::string::npos) return std::string::npos;
+
+    return pos + start_pos;
+} 
 
 int token::string::count_occurences(std::string& str, std::string& what) {
     int count = 0;
