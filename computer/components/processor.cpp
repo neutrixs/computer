@@ -2,6 +2,19 @@
 #include "memory.h"
 #include <iostream>
 #include <stdint.h>
+#include <cstdlib>
+#include <boost/algorithm/string/case_conv.hpp>
+
+bool DEBUG_PRINT_VALUES() {
+    const char* val = std::getenv("DEBUG_PRINT_VALUES");
+    if (val == nullptr) return false;
+
+    auto strval = std::string(val);
+    boost::algorithm::to_lower(strval);
+
+    if (strval == "true") return true;
+    return false;
+}
 
 Memory::Memory() : ram(65536) {
     rA = 0;
@@ -13,7 +26,7 @@ void Memory::set(bool a, bool b, bool d, bool ra, bool prt, bool cl, uint16_t X)
     ram.set(A.output(), ra, cl, (uint8_t)X);
     rA = ram.output();
 
-    // printf("%x %x %x %x\n", A.output(), B.output(), D.output(), rA);
+    if(DEBUG_PRINT_VALUES()) printf("%x %x %x %x\n", A.output(), B.output(), D.output(), rA);
 
     if (cl && prt) {
         std::cout << (uint8_t)X;
@@ -41,7 +54,7 @@ void Instruction::set(uint16_t I, uint16_t A, uint16_t B, uint16_t D, uint16_t r
 }
 
 void ControlUnit::set(uint16_t I, uint16_t A, uint16_t B, uint16_t D, uint16_t rA) {
-    // printf("0x%x: ", I);
+    if(DEBUG_PRINT_VALUES()) printf("0x%x: ", I);
     switch (I & 1 << 15) {
     case 0:
         R = I;
