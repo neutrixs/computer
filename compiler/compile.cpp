@@ -6,6 +6,7 @@
 #include "compile.h"
 #include "keywords/set.h"
 #include "keywords/mov.h"
+#include "keywords/shift.h"
 
 //0x0 - 0x03: reserved address for 'backup'
 std::vector<char> compile(std::string input) {
@@ -42,6 +43,18 @@ std::vector<char> compile(std::string input) {
         else if (first_keyword == "mov") {
             try {
                 std::vector<char> instruction = mov::compile(s, current_line + 1);
+                for (char& byte : instruction) {
+                    output.push_back(byte);
+                }
+            }
+            catch (std::string& e) {
+                std::cerr << e << std::endl;
+                std::exit(1);
+            }
+        }
+        else if (first_keyword == "lshift" || first_keyword == "rshift") {
+            try {
+                std::vector<char> instruction = shift::compile(s, current_line + 1);
                 for (char& byte : instruction) {
                     output.push_back(byte);
                 }
