@@ -190,16 +190,6 @@ std::vector<uint16_t> mov::gen_instructions(uint16_t dest_reg_instruction, uint1
     // move d to dest
     i(1 << 15 | SRC_D | dest_reg_instruction);
 
-    // restore 0x0 and 0x1 to a
-    if (need_to_backup_a) {
-        // move 0x0 to b
-        i(0x0);  i(1 << 15 | 1 << 13 | 1 << 12 | 1 << 10 | 1 << 7);
-        // left shift b by 8, output to b
-        i(0x8); i(1 << 15 | 1 << 14 | 1 << 13 | 1 << 9 | 1 << 8);
-        // do b + rA at 0x1, output to a
-        i(0x1); i(1 << 15 | 1 << 14 | 1 << 12 | 1 << 10 | 1 << 5);
-    }
-
     // restore 0x2 and 0x3 to d
     if (need_to_backup_d) {
         // move 0x2 to b
@@ -208,6 +198,16 @@ std::vector<uint16_t> mov::gen_instructions(uint16_t dest_reg_instruction, uint1
         i(0x8); i(1 << 15 | 1 << 14 | 1 << 13 | 1 << 9 | 1 << 8);
         // do b + rA at 0x3, output to d
         i(0x3); i(1 << 15 | 1 << 14 | 1 << 12 | 1 << 10 | 1 << 4);
+    }
+
+    // restore 0x0 and 0x1 to a
+    if (need_to_backup_a) {
+        // move 0x0 to b
+        i(0x0);  i(1 << 15 | 1 << 13 | 1 << 12 | 1 << 10 | 1 << 7);
+        // left shift b by 8, output to b
+        i(0x8); i(1 << 15 | 1 << 14 | 1 << 13 | 1 << 9 | 1 << 8);
+        // do b + rA at 0x1, output to a
+        i(0x1); i(1 << 15 | 1 << 14 | 1 << 12 | 1 << 10 | 1 << 5);
     }
 
     return instructions;
