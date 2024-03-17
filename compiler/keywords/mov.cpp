@@ -128,8 +128,8 @@ std::vector<char> mov::compile(std::string input, int current_line) {
 
 std::vector<uint16_t> mov::gen_instructions(uint16_t dest_reg_instruction, uint16_t dest_address, uint16_t src_reg_instruction, uint16_t src_address) {
     std::vector<uint16_t> instructions;
-    bool need_to_backup_a = dest_reg_instruction != DEST_A;
-    bool need_to_backup_d = dest_reg_instruction != DEST_D;
+    bool dest_is_a = dest_reg_instruction == DEST_A;
+    bool dest_is_d = dest_reg_instruction == DEST_D;
     bool using_a = dest_reg_instruction == DEST_A || src_reg_instruction == SRC_A;
     bool using_d = dest_reg_instruction == DEST_D || src_reg_instruction == SRC_D;
 
@@ -201,7 +201,7 @@ std::vector<uint16_t> mov::gen_instructions(uint16_t dest_reg_instruction, uint1
     i(1 << 15 | SRC_D | dest_reg_instruction);
 
     // restore 0x2 and 0x3 to d
-    if (!using_d) {
+    if (!dest_is_d) {
         // move 0x2 to b
         i(0x2);  i(1 << 15 | 1 << 13 | 1 << 12 | 1 << 10 | 1 << 7);
         // left shift b by 8, output to b
@@ -211,7 +211,7 @@ std::vector<uint16_t> mov::gen_instructions(uint16_t dest_reg_instruction, uint1
     }
 
     // restore 0x0 and 0x1 to a
-    if (!using_a) {
+    if (!dest_is_a) {
         // move 0x0 to b
         i(0x0);  i(1 << 15 | 1 << 13 | 1 << 12 | 1 << 10 | 1 << 7);
         // left shift b by 8, output to b
