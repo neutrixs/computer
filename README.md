@@ -84,3 +84,25 @@ Example:
 MOV D A;        // Copies the value from register A to register D
 MOV 0x30 0x23;  // Copies the value from memory address 0x23 to 0x30
 ```
+
+### {L/R}SHIFT
+
+The `LSHIFT` and `RSHIFT` command performs bitshift operation at the specified target.
+
+Syntax:
+```
+LSHIFT TARGET AMOUNT;
+```
+or
+```
+RSHIFT TARGET AMOUNT;
+```
+
+- `TARGET`: The target, which can be a register (needs to have both read/write capability), or a memory address.
+- `AMOUNT`: The amount of bits to be shifted.
+
+Example:
+```
+LSHIFT A 2;         // left shift register A by 2 bits
+RSHIFT 0x20 0x3;    // right shift the memory address 0x20 by 3 bits
+```
